@@ -1,0 +1,191 @@
+FORMAT: 1A
+HOST: http://factory.zone/api/v1/
+
+# Task API
+
+Access to Project Task Resources
+
+## Tasks [/projects/{project_id}/tasks/{?page,size}]
+
++ Parameters
+    + project_id(required, number,`1`)
+
+### Add a Task [POST]
+Create a Task Assigned to a  Project owned by the currently authenticated user.
+
+The API endpoint may refuse to complete the request if the authenticated user has exceeded the total number of allowed tasks for his or her account.
+
++   Request (application/json)
+            +   Headers 
+            
+            Authorization: Basic dXNlcjpwYXNzd29yZA==
+            x-api-version: 1.0
+    + Body
+            
+            {
+                "taskName" : "Research"
+                "taskDescription" : "Make findings into the proposed project"
+                "taskDeadline" : "2018-01-31 00:00:01"
+            }    
+        
+            
+            
++ Response 200 (application/json)
+
+    + Headers 
+        
+            Location: /projects/:id/task/:id
+    
+    + Body
+    
+            {
+                "company_id":1
+                "department_id":2
+                "user_id":3
+                "project_id":2
+                "task_id":1
+                "taskName" : "Research"
+                "taskDescription" : "Make findings into the proposed project"
+                "tasktDeadline" : "2018-01-31 00:00:01"
+                "createdAt" : "2017-6-21 08:12:05"
+                "taskStatus" : 1
+                "taskDeadline" : "2018-01-31 00:00:01"
+            }
+
+### List Tasks [GET]
+
++ Parameters
+    + page(required, number,`1`)...'page' number
+    + size(required, number, `10`)... page 'size'
+
++ Request
+
+    +   Headers 
+            
+            Authorization: Basic dXNlcjpwYXNzd29yZA==
+            x-api-version: 1.0
+    
++ Response 200 (application/json)
+ 
+    + Headers
+        
+            ETag : "euyfewuyfvew76f7"
+            cache-control: max-age=600
+    + Body
+            
+            {
+                "tasks":
+                [
+                    {
+                        "company_id":1
+                        "department_id":2
+                        "user_id":3
+                        "project_id":2
+                        "taskName" : "Research"
+                        "taskDescription" : "Carry out research for project"
+                        "createdAt" : "2017-6-21 08:12:05"
+                        "taskStatus" :3
+                        "taskDeadline" : "2017-12-01 13:21:14"
+                    },
+                    {
+                        "company_id":1
+                        "department_id":2
+                        "user_id":3
+                        "project_id":2
+                        "taskName" : "Develop Wireframe"
+                        "taskDescription" : "Design Wireframe for project"
+                        "createdAt" : "2017-6-21 08:30:15"
+                        "taskStatus" :1
+                        "taskDeadline" : "2017-12-07 08:30:14"
+                    },
+                    {
+                        "company_id":1
+                        "department_id":2
+                        "user_id":3
+                        "project_id":2
+                        "taskName" : "Design Mock-up"
+                        "taskDescription" : "Design Mock-up for project"
+                        "createdAt" : "2017-6-21 08:40:05"
+                        "taskStatus" :2
+                        "taskDeadline" : "2018-01-01 00:00:00"
+                    },                    
+            }
+
+## Task [/project/{project_id}/tasks/{task_id}]
+
++ Parameters
+    + project_id   (required, number, `4`)
+    + task_id   (required, number, `1`)
+
+### View Task [GET]
+
++ Request
+
+    +   Headers 
+            
+            Authorization: Basic dXNlcjpwYXNzd29yZA==
+            x-api-version: 1.0
+    
++ Response 200 (application/json)
+ 
+    + Headers
+        
+            ETag : "euyfewuyfvew76f7"
+            cache-control: max-age=600
+    + Body
+            
+            {
+                "company_id":1
+                "department_id":2
+                "user_id":3
+                "project_id":2
+                "company_id": 1
+                "department_id": 2
+                "project_id":1
+                "taskName" : "Research"
+                "taskDescription" : "Carry out research for project"
+                "createdAt" : "2017-6-21 08:12:05"
+                "taskStatus" :3
+                "taskDeadline" : "2017-12-01 13:21:14"
+            }
+
+### Edit Task [PUT]
+
++ Request (application/json)
+
+    +   Headers 
+            
+            Authorization: Basic dXNlcjpwYXNzd29yZA==
+            x-api-version: 1.0
+    + Body
+            
+            {
+                "taskName" : "Research"
+                "taskDescription" : "Make findings into the proposed project"
+                "taskDeadline" : "2018-01-31 00:00:01"
+            }    
+        
+            
+            
++ Response 200 (application/json)
+
+    + Headers 
+        
+            Location: /projects/:id/task:id
+    
+    + Body
+    
+            {
+                "company_id": 1
+                "department_id": 2
+                "user_id":2
+                "project_id":1
+                "taskName" : "Draw Wireframe"
+                "taskDescription" : "Make Wireframe of the project"
+                "taskDeadline" : "2018-01-31 00:00:01"
+                "updatedAT": "2018-02-31 03:20:00"
+            }
+
+### Delete Task [DELETE]
+
++ Response 204
